@@ -9,14 +9,25 @@ describe('PostsService', () => {
   beforeEach(async () => {
     postsService = new PostsService();
 
-    postsService.create({ text: 'Some pre-existing post' });
+    postsService.create(post);
   });
 
   it('should add a new post', () => {
     // реализуйте тест-кейс
+    jest.spyOn(postsService, "create");
+
+    postsService.create(post);
+
+    expect(postsService.create).toHaveBeenCalledWith(post);
   });
 
   it('should find a post', () => {
     // реализуйте тест-кейс
+    jest.spyOn(postsService, "find");
+
+    const findedPost = postsService.find("1");
+
+    expect(postsService.find).toHaveBeenCalledWith("1");
+    expect(findedPost).toEqual(post);
   });
 });
