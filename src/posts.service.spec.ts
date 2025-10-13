@@ -9,7 +9,7 @@ describe('PostsService', () => {
   beforeEach(async () => {
     postsService = new PostsService();
 
-    postsService.create(post);
+    postsService.create({ text: 'Some pre-existing post' });
   });
 
   it('should add a new post', () => {
@@ -28,6 +28,7 @@ describe('PostsService', () => {
     const findedPost = postsService.find("1");
 
     expect(postsService.find).toHaveBeenCalledWith("1");
-    expect(findedPost).toEqual(post);
+    expect(findedPost?.text).toEqual('Some pre-existing post');
+    expect(findedPost?.id).toEqual("1");
   });
 });
