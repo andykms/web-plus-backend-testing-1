@@ -8,6 +8,8 @@ describe('PostsService', () => {
 
   beforeEach(async () => {
     postsService = new PostsService();
+    jest.useFakeTimers()
+      .setSystemTime(new Date('2020-01-01'));
 
     postsService.create({ text: 'Some pre-existing post' });
   });
@@ -23,12 +25,11 @@ describe('PostsService', () => {
 
   it('should find a post', () => {
     // реализуйте тест-кейс
-    jest.spyOn(postsService, "find");
-
     const findedPost = postsService.find("1");
 
-    expect(postsService.find).toHaveBeenCalledWith("1");
-    expect(findedPost?.text).toEqual('Some pre-existing post');
-    expect(findedPost?.id).toEqual("1");
+    expect(findedPost).toEqual({
+      text: 'Some pre-existing post', 
+      id: "1",
+      date: new Date('2020-01-01').toISOString()});
   });
 });
